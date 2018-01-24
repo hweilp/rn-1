@@ -45,13 +45,13 @@
 
 ### 效果图预览
 
- ![image](https://github.com/bigsui/shopping-react-native/blob/master/screenshot/rn1.png)
+ ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/6680454D-6F06-4816-8506-E611F4BB5699.png)
 
- ![image](https://github.com/bigsui/shopping-react-native/blob/master/screenshot/rn2.png)
+ ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/Screenshot_2018-01-24-17-32-17.png)
 
- ![image](https://github.com/bigsui/shopping-react-native/blob/master/screenshot/rn3.png)
+ ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/Screenshot_2018-01-24-17-32-48.png)
 
- ![image](https://github.com/bigsui/shopping-react-native/blob/master/screenshot/rn4.png)
+ ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/Screenshot_2018-01-24-17-32-53.png)
 
 
 
