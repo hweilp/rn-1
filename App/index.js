@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {
+	View,
+	Text,
 	StyleSheet,
 	ToastAndroid,
 	Platform,
@@ -18,6 +20,7 @@ import ImageList from './page/image'
 import Music from './page/video'
 import Contacts from './page/contacts'
 import ContactsDetail from './page/contacts/ContactsDetail'
+import NavBar from './components/navBar'
 
 export default class Index extends Component {
 
@@ -35,7 +38,6 @@ export default class Index extends Component {
 	}
 
 	render() {
-
 		return (
 			<Router onExitApp={this._backAndroidHandler}>
 				<Modal key="modal">
@@ -51,9 +53,10 @@ export default class Index extends Component {
 				      tabBarPosition="bottom"
 				      icon={TabIcon}
 				      swipeEnabled={false}
+							hideNavBar
 						>
-							<Scene key="tab1" initial title="知乎" icon={TabIcon}  hideNavBar={false}>
-								<Scene key='Article' title='文章' component={(info) => <Article {...this.props} {...info}/>}  />
+							<Scene key="tab1" icon={TabIcon}  title={'知乎'} hideNavBar>
+								<Scene key='Article'  title={'文章'} component={(info) => <Article {...this.props} {...info}/>}  />
 								<Scene key='articleContent'
 								       navigationBarStyle={[styles.navigationBarStyle]}
 								       titleStyle={[styles.titleStyle_back]}
@@ -65,19 +68,19 @@ export default class Index extends Component {
 								key="ImageList"
 								title={'靓图'}
 								component={(info) => <ImageList {...this.props} {...info}/>}
-								hideNavBar={false}
+								hideNavBar
 							/>
 							<Scene
 								key="Music"
 								title={'歌单'}
 								component={(info) => <Music {...this.props} {...info}/>}
-								hideNavBar={false}
+								hideNavBar
 							/>
 							<Scene
 								key="Map"
 								title={'地图'}
 								component={(info) => <Map {...this.props} {...info}/>}
-								hideNavBar={false}
+								hideNavBar
 							/>
 						</Tabs>
 						<Scene
@@ -86,8 +89,7 @@ export default class Index extends Component {
 							key="Contacts"
 							title={'手机通讯录'}
 							component={(info) => <Contacts {...this.props} {...info}/>}
-							hideNavBar={false}
-							back
+							hideNavBar
 						/>
 						<Scene
 							navigationBarStyle={[styles.navigationBarStyle]}
@@ -95,8 +97,7 @@ export default class Index extends Component {
 							key="ContactsDetail"
 							title={'联系人详情'}
 							component={(info) => <ContactsDetail {...this.props} {...info}/>}
-							hideNavBar={false}
-							back
+							hideNavBar
 						/>
 
 

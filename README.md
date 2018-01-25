@@ -22,7 +22,7 @@
 	(1)cd 到需要建立项目的目录下 在该目录下运行终端
 	(2)创建一个空项目 ：执行命令 react-native init 项目名
 	(3)成功 进入到 项目名 路径下
-	(4)打开xcode Simulator 运行 react-native run-ios  即可在iOS模拟器上 运行运行项目
+	(4)打开xcode Simulator 运行 react-native run-ios  即可在iOS模拟器上 运行项目
 	(5)安装 安卓的模拟器 Genymotion , react-native run-android 即可在android模拟器上 运行项目
 	(6)通过修改App.js 修改项目
 
@@ -47,11 +47,16 @@
 
  ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/6680454D-6F06-4816-8506-E611F4BB5699.png)
 
+
  ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/Screenshot_2018-01-24-17-32-17.png)
+
 
  ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/Screenshot_2018-01-24-17-32-48.png)
 
+
  ![image](https://github.com/hwhtml/rn-1/blob/master/screenShot/Screenshot_2018-01-24-17-32-53.png)
+
+### 项目暂时Android 运行 （ios待续)
 
 
 

@@ -2,14 +2,22 @@ import React, { Component } from 'react'
 import {
 	StyleSheet,
 	View,
+	Dimensions,
 	ActivityIndicator
 } from 'react-native'
+import NavBar from './components/navBar'
 
 export default class BaseContainer extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			hideLoadingSpinner : false
+			hideLoadingSpinner : false,
+			NavBarParam:{
+				title: '',
+				leftComponent: null,
+				rightComponent: null,
+				back: false
+			}
 		};
 	}
 
@@ -27,10 +35,22 @@ export default class BaseContainer extends Component {
 				/>
 		</View>
 	};
+	SetNavBarParam = (title = '',back = false, leftComponent,rightComponent) => {
+		this.setState({
+			...this.state,
+			NavBarParam:{
+				title: title,
+				leftComponent: leftComponent,
+				rightComponent: rightComponent,
+				back: back
+			}
+		});
+	};
 
 	render(children) {
 		return (
 			<View style={styles.base_container}>
+				<NavBar {...this.state.NavBarParam}/>
 				{this.ShowLoadingSpinner()}
 				{children}
 			</View>
@@ -44,16 +64,11 @@ const styles = StyleSheet.create({
 		backgroundColor:'#FFF'
 	},
 	loading_container:{
-		flex:1,
+		width:Dimensions.get('window').width,
+		height:Dimensions.get('window').height,
 		justifyContent:'center',
 		alignItems:'center',
 		backgroundColor:'#FFF',
-		position:'absolute',
-		top:0,
-		right:0,
-		left:0,
-		bottom:0,
-		zIndex:2
 	}
 
 });

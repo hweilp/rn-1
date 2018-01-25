@@ -16,6 +16,8 @@ import {
 import BaseContainer from '../../BaseContainer';
 import SlefSwiper from '../../components/Swiper';
 import { Actions } from 'react-native-router-flux';
+import {Drawer,ListRow,Button} from 'teaset';
+
 const ListItem = ({ data }) => {
 	return (
 		<TouchableOpacity style={styles.listItem} onPress={() => Actions.articleContent({articleID: data.id})}>
@@ -42,18 +44,54 @@ export default class HomeIndex extends BaseContainer {
 		};
 	}
 	componentDidMount () {
-		let self = this;
+		this.SetNavBarParam('文章',false,this.renderLeft());
 		fetch('https://news-at.zhihu.com/api/4/news/latest')
 			.then((data) => {return data.json()})
 			.then((res) => {
-				self.setState({
+				this.setState({
 					stories: this.state.stories.cloneWithRows(res.stories),
 					SWiperList: res.top_stories
 				});
+				this.HideLoadingSpinner();
+			});
+	};
 
-				self.HideLoadingSpinner()
-			})
-	}
+	renderLeft = () => {
+		return (
+			<TouchableOpacity onPress={() => this.ShowDrawerLeft()} >
+				<Image source={require('../../static/icon/person.png')} resizeMode={'contain'} style={styles.image}/>
+			</TouchableOpacity>
+		)
+	};
+
+	ShowDrawerLeft = () => {
+		this.ShowDrawerLeftMenu = Drawer.open(this.renderDrawerMenu(), 'left', 'none');
+	};
+	GoToContacts = () => {
+		this.ShowDrawerLeftMenu.close();
+		this.props.navigation.navigate('Contacts');
+	};
+
+	renderDrawerMenu = () => {
+		return (
+			<View style={{width : Dimensions.get('window').width - 50}}>
+				<View style={{backgroundColor:'#CCC',height:45,justifyContent:'center',alignItems:'center'}}>
+					<Text style={{fontSize:18,color:"#fb6868"}}>个人中心</Text>
+				</View>
+
+				<ListRow bottomSeparator='full'  title='获取手机通讯录' detail='' onPress={() => this.GoToContacts() } />
+				<View style={{marginTop:10}}>
+					<Text style={{textAlign:'center',color:"#3485ff",fontSize:16,}} onPress={() => this.ShowDrawerLeftMenu.close() }>返回</Text>
+				</View>
+
+			</View>
+
+		)
+	};
+
+
+
+
 
 	render() {
 		return super.render(
@@ -98,5 +136,8 @@ const styles = StyleSheet.create({
 		width: 60,
 		height: 60
 	},
-
+	image:{
+		height:20,
+		width:20,
+	}
 });

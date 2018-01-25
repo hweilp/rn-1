@@ -23,10 +23,12 @@ import songList from '../../static/musicJson/list.json';
 import songInfoList from '../../static/musicJson/infoJson.json';
 import RNFetchBlob from 'react-native-fetch-blob';
 
+import BaseContainer from '../../BaseContainer'
+
 const {width,height} = Dimensions.get('window');
 let lyrObj = [];   // 存放歌词
 let myAnimate;
-export default class Music extends Component {
+export default class Music extends BaseContainer {
 	constructor(props) {
 		super(props);
 		this.spinValue = new Animated.Value(0);
@@ -296,11 +298,13 @@ export default class Music extends Component {
 		this.spin();  //   启动旋转
 	};
 	componentDidMount() {
+		this.SetNavBarParam('歌单');
+		this.HideLoadingSpinner();
 		this.LoadSong(0);
 	};
 
 	render() {
-		return (
+		return super.render(
 			<View style={styles.container}>
 				{/*背景大图*/}
 				<Image source={{uri:this.state.pic_big}} style={{flex:1}}/>

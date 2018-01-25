@@ -51,7 +51,8 @@ export default class ImageIndex extends BaseContainer {
 		};
 	}
 	componentDidMount() {
-		this.initData()
+		this.initData();
+		this.SetNavBarParam('靓图')
 	}
 	initData = (page = 1, callback) => {
 

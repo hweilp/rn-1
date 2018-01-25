@@ -14,7 +14,8 @@ export default class Image extends BaseContainer {
 		}
 	}
 	componentWillMount (){
-		this._fetch()
+		this._fetch();
+		this.SetNavBarParam('文章内容',true)
 	}
 	_fetch() {
 		fetch('https://news-at.zhihu.com/api/4/news/' + this.props.articleID)

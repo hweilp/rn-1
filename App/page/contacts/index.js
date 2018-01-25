@@ -27,6 +27,9 @@ export default class MapIndex extends BaseContainer {
 			contactsList : []
 		};
 	}
+	componentWillMount(){
+		this.SetNavBarParam('手机通讯录',true)
+	}
 	componentDidMount = () => {
 		this.getContacts()
 	};

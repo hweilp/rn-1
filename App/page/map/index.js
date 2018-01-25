@@ -8,7 +8,6 @@ import {
 	TouchableOpacity
 } from 'react-native'
 import BaseContainer from '../../BaseContainer'
-import { Actions } from 'react-native-router-flux';
 import {ListRow} from 'teaset';
 import BaiDuMap from '../../components/BaiduMap'
 
@@ -20,6 +19,7 @@ export default class MapIndex extends BaseContainer {
 		};
 	}
 	componentDidMount = () => {
+		this.SetNavBarParam('地图');
 		this.HideLoadingSpinner();
 	};
 
@@ -27,10 +27,8 @@ export default class MapIndex extends BaseContainer {
 		return super.render(
 			<View style={styles.base_container}>
 				<View style={styles.container}>
-					<ListRow bottomSeparator='full'  title='获取手机通讯录' detail='' onPress={() => this.props.navigation.navigate('Contacts') } />
 					<BaiDuMap/>
 				</View>
-
 			</View>
 		)
 	}
