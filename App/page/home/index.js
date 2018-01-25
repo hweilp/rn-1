@@ -11,12 +11,13 @@ import {
 	Dimensions,
 	TouchableOpacity,
 	Text,
-	Image
+	Image,
+	Linking
 } from 'react-native';
 import BaseContainer from '../../BaseContainer';
 import SlefSwiper from '../../components/Swiper';
 import { Actions } from 'react-native-router-flux';
-import {Drawer,ListRow,Button} from 'teaset';
+import {Drawer,ListRow,Toast} from 'teaset';
 
 const ListItem = ({ data }) => {
 	return (
@@ -67,19 +68,32 @@ export default class HomeIndex extends BaseContainer {
 	ShowDrawerLeft = () => {
 		this.ShowDrawerLeftMenu = Drawer.open(this.renderDrawerMenu(), 'left', 'none');
 	};
+
 	GoToContacts = () => {
 		this.ShowDrawerLeftMenu.close();
 		this.props.navigation.navigate('Contacts');
 	};
 
+	GoToWebView = (webUrl) => {
+		let WebUrl = 'http://' + webUrl;
+		Linking.canOpenURL(WebUrl).then(supported => {
+			if (supported) {
+				Linking.openURL(WebUrl);
+			} else {
+				Toast.message('无法打开该URL:' + WebUrl);
+			}
+		})
+	};
+
 	renderDrawerMenu = () => {
 		return (
 			<View style={{width : Dimensions.get('window').width - 50}}>
-				<View style={{backgroundColor:'#CCC',height:45,justifyContent:'center',alignItems:'center'}}>
+				<View style={{backgroundColor:'#eaebec',height:45,justifyContent:'center',alignItems:'center'}}>
 					<Text style={{fontSize:18,color:"#fb6868"}}>个人中心</Text>
 				</View>
 
 				<ListRow bottomSeparator='full'  title='获取手机通讯录' detail='' onPress={() => this.GoToContacts() } />
+				<ListRow bottomSeparator='full'  title='进入百度' detail='' onPress={() => this.GoToWebView('www.baidu.com') } />
 				<View style={{marginTop:10}}>
 					<Text style={{textAlign:'center',color:"#3485ff",fontSize:16,}} onPress={() => this.ShowDrawerLeftMenu.close() }>返回</Text>
 				</View>

@@ -24,13 +24,12 @@ export default class MapIndex extends BaseContainer {
 	constructor(props){
 		super(props);
 		this.state = {
-			contactsList : []
+			contactsList : null
 		};
 	}
-	componentWillMount(){
-		this.SetNavBarParam('手机通讯录',true)
-	}
+
 	componentDidMount = () => {
+		this.SetNavBarParam('手机通讯录',true);
 		this.getContacts()
 	};
 
@@ -84,19 +83,26 @@ export default class MapIndex extends BaseContainer {
 		Overlay.show(overlayView);
 	}
 
-	pressBtn = (phoneNumber) => {
-		this.showPop('zoomIn', true, '拨打电话/发送信息？',phoneNumber);
+	pressBtn = (contactsInfo) => {
+		this.props.navigation.navigate('ContactsDetail',{info:contactsInfo});
+		// this.showPop('zoomIn', true, '拨打电话/发送信息？',phoneNumber);
 	};
 
 	renderContactsItem = () => {
 		let Arr = [];
 		let contactsList = this.state.contactsList;
 
-		if(contactsList.length <= 0) return <View
+		if(contactsList === null) return <View
 			style={[styles.constantsView,{backgroundColor:"rgba(191, 191, 191, 1)",
 				justifyContent:'center',width:Dimensions.get('window').width}]}>
 			<Image source={require('../../static/gif/loading.gif')} style={styles.constantsIcon}/>
 			<Text style={[styles.constantsName,{textAlign:'center'}]}>正在获取联系人，请稍后...</Text>
+		</View>;
+
+		if(contactsList.length <= 0) return <View
+			style={[styles.constantsView,{backgroundColor:"rgba(191, 191, 191, 1)",
+				justifyContent:'center',width:Dimensions.get('window').width}]}>
+			<Text style={[styles.constantsName,{textAlign:'center'}]}>当前通讯录中无联系人</Text>
 		</View>;
 
 		// for (let i = 0 ;i < contactsList.length;i++){
@@ -119,21 +125,19 @@ export default class MapIndex extends BaseContainer {
 			}
 
 			Arr.push(
-				<TouchableOpacity onPress={() => this.pressBtn(constantsPhone)} key={contactsList[i].recordID+i}>
+				<TouchableOpacity onPress={() => this.pressBtn(contactsList[i])} key={contactsList[i].recordID+i}>
 					<View  style={styles.constantsViewContainer} key={contactsList[i].recordID+i}>
-
 						<View style={[styles.constantsView,]} >
 							<Text key={contactsList[i].recordID+i} style={styles.constantsName}>{constantsName}</Text>
 							<Text key={Number(contactsList[i].recordID)-i} style={styles.constantsNum}>{constantsPhone}</Text>
 						</View>
-						<View style={[styles.constantsView,{justifyContent:'center',width:80}]} >
-							<Image source={require('../../static/icon/message05.png')} resizeMode='contain' style={styles.constantsIcon}/>
-							<Image source={require('../../static/icon/tel.png')} resizeMode='contain' style={styles.constantsIcon}/>
+						<View style={[styles.constantsView,{justifyContent:'flex-end',width:80}]} >
+							{/*<Image source={require('../../static/icon/message05.png')} resizeMode='contain' style={styles.constantsIcon}/>*/}
+							{/*<Image source={require('../../static/icon/tel.png')} resizeMode='contain' style={styles.constantsIcon}/>*/}
 							<Image source={require('../../static/icon/right.png')} resizeMode='contain' style={styles.constantsIcon}/>
 						</View>
 					</View>
 				</TouchableOpacity>
-
 			)
 		}
 		return Arr;
@@ -141,6 +145,7 @@ export default class MapIndex extends BaseContainer {
 
 	getContacts = () => {
 		Contacts.getAll( (err, contacts) => {
+			console.log(contacts)
 			let State = this.state;
 			State.contactsList = contacts;
 			this.setState(State);
