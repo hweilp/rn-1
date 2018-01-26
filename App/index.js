@@ -20,7 +20,7 @@ import ImageList from './page/image'
 import Music from './page/video'
 import Contacts from './page/contacts'
 import ContactsDetail from './page/contacts/ContactsDetail'
-import NavBar from './components/navBar'
+import ImagePicker from './page/image/ImagePicker'
 
 export default class Index extends Component {
 
@@ -44,9 +44,7 @@ export default class Index extends Component {
 					<Stack
 						key="stack"
 						hideNavBar
-						navigationBarStyle={[styles.navigationBarStyle]}
 		        tabBarStyle={styles.tabBarStyle}
-		        titleStyle={styles.titleStyle}
 					>
 						<Tabs
 							key="tabbar"
@@ -57,11 +55,7 @@ export default class Index extends Component {
 						>
 							<Scene key="tab1" icon={TabIcon}  title={'知乎'} hideNavBar>
 								<Scene key='Article'  title={'文章'} component={(info) => <Article {...this.props} {...info}/>}  />
-								<Scene key='articleContent'
-								       navigationBarStyle={[styles.navigationBarStyle]}
-								       titleStyle={[styles.titleStyle_back]}
-								       title='文章内容'
-								       component={(info) => <ArticleContent {...this.props} {...info}/>}/>
+								<Scene key='articleContent' title='文章内容' component={(info) => <ArticleContent {...this.props} {...info}/>}/>
 							</Scene>
 
 							<Scene
@@ -84,19 +78,21 @@ export default class Index extends Component {
 							/>
 						</Tabs>
 						<Scene
-							navigationBarStyle={[styles.navigationBarStyle]}
-							titleStyle={[styles.titleStyle_back]}
 							key="Contacts"
 							title={'手机通讯录'}
 							component={(info) => <Contacts {...this.props} {...info}/>}
 							hideNavBar
 						/>
 						<Scene
-							navigationBarStyle={[styles.navigationBarStyle]}
-							titleStyle={[styles.titleStyle_back]}
 							key="ContactsDetail"
 							title={'联系人详情'}
 							component={(info) => <ContactsDetail {...this.props} {...info}/>}
+							hideNavBar
+						/>
+						<Scene
+							key="ImagePicker"
+							title={'相册图片'}
+							component={(info) => <ImagePicker {...this.props} {...info}/>}
 							hideNavBar
 						/>
 

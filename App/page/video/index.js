@@ -297,10 +297,12 @@ export default class Music extends BaseContainer {
 		});
 		this.spin();  //   启动旋转
 	};
+	componentWillMount(){
+		this.LoadSong(0);
+	}
 	componentDidMount() {
 		this.SetNavBarParam('歌单');
 		this.HideLoadingSpinner();
-		this.LoadSong(0);
 	};
 
 	render() {
@@ -339,12 +341,16 @@ export default class Music extends BaseContainer {
 					{/*歌曲信息*/}
 					<View style={styles.playingInfo}>
 						{/*作者-歌名*/}
-						<Text>{this.state.author} - {this.state.title}</Text>
+						<View style={{flex:1,}}>
+							<Text>asdf{this.state.author} - {this.state.title}asdf</Text>
+						</View>
 						{/*时间*/}
-						<Text>{this.formatTime(Math.floor(this.state.currentTime))} - {this.formatTime(Math.floor(this.state.duration))}</Text>
+						<View style={{width:90,justifyContent:'flex-end'}}>
+							<Text>{this.formatTime(Math.floor(this.state.currentTime))} - {this.formatTime(Math.floor(this.state.duration))}</Text>
+						</View>
 					</View>
 					{/*播放模式*/}
-					<View style = {{marginTop: 5,marginBottom:5,marginLeft: 20}}>
+					<View style = {{marginTop: 5,marginBottom:5,marginLeft: 20,width:50}}>
 						<TouchableOpacity onPress={()=>this.playModel(this.state.playModel)}>
 							<Image source={this.state.btnModel} style={{width:20,height:20}}/>
 						</TouchableOpacity>
@@ -385,7 +391,7 @@ export default class Music extends BaseContainer {
 					<View style={{height:140,alignItems:'center'}}>
 
 						<ScrollView
-							contentContainerStyle={{position:'relative',paddingBottom:60,paddingTop:10}}
+							contentContainerStyle={{position:'relative',paddingBottom:60,paddingTop:10,width:width - 100}}
 							ref={(scrollView) => { _scrollView = scrollView}}
 						>
 							{this.renderItem()}
@@ -416,7 +422,7 @@ const styles = StyleSheet.create({
 	},
 	playingInfo: {
 		flexDirection: 'row',
-		alignItems:'stretch',
+		alignItems:'center',
 		justifyContent: 'space-between',
 		paddingTop: 40,
 		paddingLeft: 20,

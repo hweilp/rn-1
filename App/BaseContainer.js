@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 	},
 	loading_container:{
 		width:Dimensions.get('window').width,
-		height:Dimensions.get('window').height,
+		height:Dimensions.get('window').height - 90 ,
 		justifyContent:'center',
 		alignItems:'center',
 		backgroundColor:'#FFF',

@@ -3737,6 +3737,10 @@ react-native-fs@^2.9.7:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
 
+react-native-image-picker@^0.26.7:
+  version "0.26.7"
+  resolved "http://registry.npm.taobao.org/react-native-image-picker/download/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
+
 react-native-router-flux@^4.0.0-beta.28:
   version "4.0.0-beta.28"
   resolved "http://registry.npm.taobao.org/react-native-router-flux/download/react-native-router-flux-4.0.0-beta.28.tgz#1d39cf176c88d0658af03cfa80dfb4a8eb284619"
@@ -3752,6 +3756,10 @@ react-native-router-flux@^4.0.0-beta.28:
 react-native-splash-screen@^3.0.6:
   version "3.0.6"
   resolved "http://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.0.6.tgz#c0bbf2c8ae40a313c4c7044f55e569414ff68332"
+
+react-native-storage@^0.2.2:
+  version "0.2.2"
+  resolved "http://registry.npm.taobao.org/react-native-storage/download/react-native-storage-0.2.2.tgz#4449197f122b2da0650e3704e1f050260ed58d9f"
 
 react-native-swiper@^1.5.13:
   version "1.5.13"

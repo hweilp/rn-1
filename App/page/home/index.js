@@ -12,12 +12,30 @@ import {
 	TouchableOpacity,
 	Text,
 	Image,
-	Linking
+	Linking,
+	ActivityIndicator
 } from 'react-native';
 import BaseContainer from '../../BaseContainer';
 import SlefSwiper from '../../components/Swiper';
 import { Actions } from 'react-native-router-flux';
-import {Drawer,ListRow,Toast} from 'teaset';
+import {Drawer,ListRow,Toast,Overlay} from 'teaset';
+import  ImagePicker from 'react-native-image-picker';
+import  RNFS from 'react-native-fs'
+
+const photoOptions = {
+	//底部弹出框选项
+	title:'请选择',
+	cancelButtonTitle:'取消',
+	takePhotoButtonTitle:'拍照',
+	chooseFromLibraryButtonTitle:'选择相册',
+	quality:0.75,
+	allowsEditing:true,
+	noData:false,
+	storageOptions: {
+		skipBackup: true,
+		path:'images'
+	}
+};
 
 const ListItem = ({ data }) => {
 	return (
@@ -75,6 +93,7 @@ export default class HomeIndex extends BaseContainer {
 	};
 
 	GoToWebView = (webUrl) => {
+		this.ShowDrawerLeftMenu.close();
 		let WebUrl = 'http://' + webUrl;
 		Linking.canOpenURL(WebUrl).then(supported => {
 			if (supported) {
@@ -85,6 +104,61 @@ export default class HomeIndex extends BaseContainer {
 		})
 	};
 
+	openImagePicker = () => {
+		this.showPop();
+		ImagePicker.showImagePicker(photoOptions, (res)  => {
+			if(!res.didCancel && !res.error && !res.customButton) {
+				this.customPopView.close();
+				this.ShowDrawerLeftMenu.close();
+				this.props.navigation.navigate('ImagePicker',{path:res.path,uri:res.uri});
+			}else {
+				this.customPopView.close();
+			}
+		})
+	};
+
+	readFS = () => {
+		RNFS.readDir(RNFS.DocumentDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+			.then((result) => {
+				console.log('GOT RESULT', result);
+
+				// stat the first file
+				return Promise.all([RNFS.stat(result[0].path), result[0].path]);
+			})
+			.then((statResult) => {
+				if (statResult[0].isFile()) {
+					// if we have a file, read it
+					return RNFS.readFile(statResult[1], 'utf8');
+				}
+
+				return 'no file';
+			})
+			.then((contents) => {
+				// log the file contents
+				console.log(contents);
+			})
+			.catch((err) => {
+				console.log(err.message, err.code);
+			});
+	};
+
+	showPop() {
+		let overlayView = (
+			<Overlay.PopView
+				style={{alignItems: 'center', justifyContent: 'center'}}
+				overlayOpacity={.5}
+				ref={v => this.customPopView = v}
+			>
+				<ActivityIndicator
+					animating={true}
+					color='#ccc'
+					size='large'
+				/>
+			</Overlay.PopView>
+		);
+		Overlay.show(overlayView);
+	}
+
 	renderDrawerMenu = () => {
 		return (
 			<View style={{width : Dimensions.get('window').width - 50}}>
@@ -94,6 +168,12 @@ export default class HomeIndex extends BaseContainer {
 
 				<ListRow bottomSeparator='full'  title='获取手机通讯录' detail='' onPress={() => this.GoToContacts() } />
 				<ListRow bottomSeparator='full'  title='进入百度' detail='' onPress={() => this.GoToWebView('www.baidu.com') } />
+				<ListRow bottomSeparator='full'  title='打开相册' detail='' onPress={() => this.openImagePicker() } />
+				<ListRow bottomSeparator='full'  title='读取文件' detail='' onPress={() => this.readFS() } />
+
+
+
+
 				<View style={{marginTop:10}}>
 					<Text style={{textAlign:'center',color:"#3485ff",fontSize:16,}} onPress={() => this.ShowDrawerLeftMenu.close() }>返回</Text>
 				</View>
@@ -102,10 +182,6 @@ export default class HomeIndex extends BaseContainer {
 
 		)
 	};
-
-
-
-
 
 	render() {
 		return super.render(
