@@ -12,6 +12,7 @@ import BaseContainer from '../../BaseContainer';
 import {AlbumView, Overlay,Theme,Label,Button} from 'teaset';
 import Storage from '../../tool/Storage';
 
+
 export default class MapIndex extends BaseContainer {
 	constructor(props){
 		super(props);
@@ -20,15 +21,24 @@ export default class MapIndex extends BaseContainer {
 			thumbs:[],
 		};
 	}
+	componentDidMount = () => {
+		this.get();
+
+		this.SetNavBarParam('相册图片',true,null,<TouchableOpacity onPress={() => this.removeAllImage()}>
+			<Text style={{fontSize:16}}>清除</Text>
+		</TouchableOpacity>);
+
+		this.HideLoadingSpinner();
+	};
 
 	get = () => {
 		Storage.load({
-			key: 'ImagePicekr',
-			id: '2222'
+			key: 'picker',
+			id:'2222',
+			autoSync: true,
 		}).then(res => {
-			res.push({uri:this.props.navigation.state.params.uri});
-			this.setState({thumbs:res,images:res});
-
+			res.thumbs.push({uri:this.props.navigation.state.params.uri});
+			this.setState({thumbs:res.thumbs,images:res.thumbs});
 		}).catch(err => {
 			let State = this.state;
 			State.thumbs.push({uri:this.props.navigation.state.params.uri});
@@ -40,16 +50,18 @@ export default class MapIndex extends BaseContainer {
 
 	save = () => {
 		Storage.save({
-			key: 'ImagePicekr',
+			key: 'picker',
 			id:'2222',
-			data: this.state.thumbs,
-			expires: 1000 * 3600 * 24 * 365
+			data:{
+				thumbs:this.state.thumbs
+			},
+			expires: 1000 * 3600 * 24 * 10
 		});
 	};
 
 	remove = () => {
 		Storage.remove({
-			key: 'ImagePicekr',
+			key: 'picker',
 			id: '2222'
 		});
 		this.setState({thumbs : []})
@@ -78,16 +90,6 @@ export default class MapIndex extends BaseContainer {
 			</Overlay.PopView>
 		);
 		Overlay.show(overlayView);
-	};
-
-	componentDidMount = () => {
-		this.get();
-
-		this.SetNavBarParam('相册图片',true,null,<TouchableOpacity onPress={() => this.removeAllImage()}>
-			<Text style={{fontSize:16}}>清除</Text>
-		</TouchableOpacity>);
-
-		this.HideLoadingSpinner();
 	};
 
 	onImagePress(index) {
@@ -123,7 +125,7 @@ export default class MapIndex extends BaseContainer {
 				<ScrollView>
 					<View style={styles.container}>
 						{this.state.thumbs.map((item, index) => (
-							<View style={{width: Dimensions.get('window').width / 4, height: 100, padding: 2}} key={index}>
+							<View style={{width: (Dimensions.get('window').width - 20 - 2) / 3, height: 100, padding: 2}} key={index}>
 								<TouchableOpacity style={{flex: 1}} ref={'it' + index} onPress={() => this.onImagePress(index)}>
 									<Image style={{width: null, height: null, flex: 1}} source={item} resizeMode='cover' />
 								</TouchableOpacity>
@@ -148,6 +150,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		flexDirection:'row',
 		flexWrap:'wrap',
-		alignItems:'flex-start'
+		alignItems:'flex-start',
+		justifyContent:'flex-start'
 	}
 });

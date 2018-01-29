@@ -27,7 +27,7 @@ export default class BaseContainer extends Component {
 	};
 	ShowLoadingSpinner = () => {
 		if (this.state.hideLoadingSpinner) return null;
-		return <View style={styles.loading_container}>
+		return <View style={[styles.loading_container,{height:this.props.tabBarPosition? Dimensions.get('window').height - 90 : Dimensions.get('window').height - 60}]}>
 				<ActivityIndicator
 					animating={true}
 					color='#ccc'

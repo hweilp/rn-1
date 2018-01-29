@@ -63,7 +63,7 @@ export default class HomeIndex extends BaseContainer {
 		};
 	}
 	componentDidMount () {
-		this.SetNavBarParam('文章',false,this.renderLeft());
+		this.SetNavBarParam('文章',false,this.renderNavLeftBtn());
 		fetch('https://news-at.zhihu.com/api/4/news/latest')
 			.then((data) => {return data.json()})
 			.then((res) => {
@@ -75,7 +75,7 @@ export default class HomeIndex extends BaseContainer {
 			});
 	};
 
-	renderLeft = () => {
+	renderNavLeftBtn = () => {
 		return (
 			<TouchableOpacity onPress={() => this.ShowDrawerLeft()} >
 				<Image source={require('../../static/icon/person.png')} resizeMode={'contain'} style={styles.image}/>
@@ -103,6 +103,10 @@ export default class HomeIndex extends BaseContainer {
 			}
 		})
 	};
+	GoToFile = () => {
+		this.ShowDrawerLeftMenu.close();
+		this.props.navigation.navigate('File');
+	};
 
 	openImagePicker = () => {
 		this.showPop();
@@ -115,31 +119,6 @@ export default class HomeIndex extends BaseContainer {
 				this.customPopView.close();
 			}
 		})
-	};
-
-	readFS = () => {
-		RNFS.readDir(RNFS.DocumentDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-			.then((result) => {
-				console.log('GOT RESULT', result);
-
-				// stat the first file
-				return Promise.all([RNFS.stat(result[0].path), result[0].path]);
-			})
-			.then((statResult) => {
-				if (statResult[0].isFile()) {
-					// if we have a file, read it
-					return RNFS.readFile(statResult[1], 'utf8');
-				}
-
-				return 'no file';
-			})
-			.then((contents) => {
-				// log the file contents
-				console.log(contents);
-			})
-			.catch((err) => {
-				console.log(err.message, err.code);
-			});
 	};
 
 	showPop() {
@@ -169,9 +148,7 @@ export default class HomeIndex extends BaseContainer {
 				<ListRow bottomSeparator='full'  title='获取手机通讯录' detail='' onPress={() => this.GoToContacts() } />
 				<ListRow bottomSeparator='full'  title='进入百度' detail='' onPress={() => this.GoToWebView('www.baidu.com') } />
 				<ListRow bottomSeparator='full'  title='打开相册' detail='' onPress={() => this.openImagePicker() } />
-				<ListRow bottomSeparator='full'  title='读取文件' detail='' onPress={() => this.readFS() } />
-
-
+				<ListRow bottomSeparator='full'  title='读取文件' detail='' onPress={() => this.GoToFile() } />
 
 
 				<View style={{marginTop:10}}>

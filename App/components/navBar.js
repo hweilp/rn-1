@@ -13,7 +13,7 @@ import { Actions } from 'react-native-router-flux';
 
 const NavBackComponent = () => {
 	return (
-		<TouchableOpacity onPress={() => Actions.pop() } >
+		<TouchableOpacity onPress={() => Actions.pop()} activeOpacity={.5} >
 			<View style={styles.navBtn}>
 				<Image source={require('../static/icon/nav_back.png')} resizeMode={'contain'} style={styles.image}/>
 			</View>
@@ -56,6 +56,7 @@ export default class NavBar extends React.Component {
 
 const styles = StyleSheet.create({
 	container:{
+		position:'relative',
 		height:45,
 		width:width,
 		flexDirection:'row',
@@ -63,7 +64,8 @@ const styles = StyleSheet.create({
 		alignItems:'center',
 		backgroundColor:'#FFF',
 		borderColor:'#CCC',
-		borderBottomWidth:1
+		borderBottomWidth:1,
+		zIndex:999999
 	},
 	navBtn:{
 		height:40,

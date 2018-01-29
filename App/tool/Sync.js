@@ -1,4 +1,4 @@
-import Storage from './Storage';
+import storage from './Storage';
 export default  sync = {
 	user : (params) => {
 		params.key = 'user';
@@ -7,20 +7,20 @@ export default  sync = {
 			age : 20,
 			name:'熊大'
 		};
-		Storage.save({
+		storage.save({
 			key: params.key,
 			id : params.id,
 			data: params.data
 		});
 	},
-	ImagePicekr : (params) => {
-		params.key = 'ImagePicekr';
+	picker : (params) => {
+		params.key = 'picker';
 		params.id = '2222';
 		params.data = {
 			thumbs:[]
 		};
 
-		Storage.save({
+		storage.save({
 			key: params.key,
 			id : params.id,
 			data: params.data

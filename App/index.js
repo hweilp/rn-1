@@ -9,18 +9,20 @@ import {
 } from 'react-native'
 
 
-import { Scene, Router, Tabs,	Stack, Modal } from 'react-native-router-flux'
-import TabIcon from './components/tabbarIcon'
+import { Scene, Router, Tabs,	Stack, Modal } from 'react-native-router-flux';
+import TabIcon from './components/tabbarIcon';
 
 
-import Map from './page/map'
-import Article from './page/home'
-import ArticleContent from './page/home/webView'
-import ImageList from './page/image'
-import Music from './page/video'
-import Contacts from './page/contacts'
-import ContactsDetail from './page/contacts/ContactsDetail'
-import ImagePicker from './page/image/ImagePicker'
+import Map from './page/map';
+import Article from './page/home';
+import ArticleContent from './page/home/webView';
+import ImageList from './page/image';
+import Music from './page/video';
+import Contacts from './page/contacts';
+import ContactsDetail from './page/contacts/ContactsDetail';
+import ImagePicker from './page/image/ImagePicker';
+import File from './page/file';
+import FileDetail from './page/file/FileDetail';
 
 export default class Index extends Component {
 
@@ -79,20 +81,27 @@ export default class Index extends Component {
 						</Tabs>
 						<Scene
 							key="Contacts"
-							title={'手机通讯录'}
 							component={(info) => <Contacts {...this.props} {...info}/>}
 							hideNavBar
 						/>
 						<Scene
 							key="ContactsDetail"
-							title={'联系人详情'}
 							component={(info) => <ContactsDetail {...this.props} {...info}/>}
 							hideNavBar
 						/>
 						<Scene
 							key="ImagePicker"
-							title={'相册图片'}
 							component={(info) => <ImagePicker {...this.props} {...info}/>}
+							hideNavBar
+						/>
+						<Scene
+							key="File"
+							component={(info) => <File {...this.props} {...info}/>}
+							hideNavBar
+						/>
+						<Scene
+							key="FileDetail"
+							component={(info) => <FileDetail {...this.props} {...info}/>}
 							hideNavBar
 						/>
 

@@ -32,5 +32,5 @@ let storage = new Storage({
 
 // 对于react native
 // global.storage = storage;
-
+//
 module.exports = storage;
